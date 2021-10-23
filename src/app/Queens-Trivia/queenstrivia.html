@@ -1,0 +1,49 @@
+<div class="loading-overlay" *ngIf="IsWait">
+  <mat-progress-spinner
+    class="spinnnerCenter"
+    *ngIf="loaderkeep"
+    mode="indeterminate"
+  >
+  </mat-progress-spinner>
+  <div style="position: relative; top: -60px; left: 30px">
+    Please wait while loading the question
+  </div>
+</div>
+
+<h4>{{question}}</h4>
+
+<form style="margin: 20px" #answerForm="ngForm">
+  <div class="form-group">
+    <input
+      type="text"
+      id="triviaAns"
+      name="triviaAns"
+      class="form-control"
+      [(ngModel)]="trivia.triviaAns"
+      #triviaAns="ngModel"
+    />
+
+    <div
+      *ngIf="triviaAns.invalid && (triviaAns.dirty || triviaAns.touched)"
+      class="alert"
+    >
+      <div *ngIf="triviaAns.errors?.required">Answer is required.</div>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="Issubmitted">
+  <h4 *ngIf="Issubmitted">Your Answer is {{displayAns}}</h4>
+  <h4 *ngIf="Issubmitted">Right Answer is {{answer}}</h4>
+  <h4 *ngIf="isRight">Congragulations !! Loading another question</h4>
+  <h4 *ngIf="!isRight">Better luck next time !! Loading another question</h4>
+</div>
+
+<button
+  type="submit"
+  class="submitbutton"
+  [disabled]="Issubmitted"
+  (click)="vallidateAnswer(triviaAns.value)"
+>
+  Submit
+</button>
